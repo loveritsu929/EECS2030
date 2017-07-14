@@ -23,6 +23,8 @@ public class SnakeGameApp {
 	    model.addObserver(view);
 		
 		(new Thread(model)).start();
+		
+		System.out.println(model.sBody);
 	
 	}
 }

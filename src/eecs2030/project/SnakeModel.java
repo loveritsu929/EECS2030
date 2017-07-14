@@ -34,11 +34,14 @@ public class SnakeModel extends Observable implements Runnable{
 		this.width  = v.getWidth();
 		this.height = v.getHeight();
 		
+		occupied = new boolean[width][height];
+		
 		sBody.clear();
 		poisons.clear();
 		
 		//creat the snake
 		for(int i = 0; i < INITIAL_LENGTH; i++){
+			
 			int x = width/2 ;
 			int y = height/2 + i;
 			
@@ -47,20 +50,37 @@ public class SnakeModel extends Observable implements Runnable{
 		}
 		
 		creatFood();
+		creatPoisons();
 		
 		running = true;
+		//setUP();
+	}
+	
+	private void setUP(){
+		
 		
 	}
 	
-	public void creatFood(){
+	private void creatFood(){
 		int x = 0;
 		int y = 0;
 		
+		do{
 		x = rd.nextInt(width + 1);
 		y = rd.nextInt(height +1);
 		
 		food = new Node(x, y);
+		
+		} while(occupied[x][y] == true );
+			
 		occupied[x][y] = true;
+	}
+	
+	private void creatPoisons(){
+		int x = 0;
+		int y = 0;
+		
+		
 	}
 		
 	@Override
@@ -82,7 +102,12 @@ public class SnakeModel extends Observable implements Runnable{
 			}
 	
 	
-	private static class Node{
+	 	/**
+	 	 * No accesss modifier so other classes in the same package can see it.
+	 	 * @author lover
+	 	 *
+	 	 */
+	 	class Node{
 		private int x;
 		private int y;
 		

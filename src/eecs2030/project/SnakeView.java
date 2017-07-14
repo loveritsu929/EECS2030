@@ -14,6 +14,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import eecs2030.project.SnakeModel.Node;
+
 public class SnakeView implements Observer {
 
 	private SnakeController ctrl;
@@ -53,8 +55,6 @@ public class SnakeView implements Observer {
 		frame.addKeyListener(ctrl);
 		
 		frame.setSize(width_columns*NODE_SIZE, height_rows*NODE_SIZE+100 );
-		//this.setSize(field.getWidth(), field.getHeight() + 100);
-		//this.setSize(1000,1000);
 		frame.setResizable(false); 
 		frame.pack();
 		frame.setVisible(true);
@@ -89,6 +89,20 @@ public class SnakeView implements Observer {
 		g.fillRect(0, 0, field.getWidth(), field.getHeight());
 		
 		//draw the food
+		g.setColor(Color.green);
+		g.fillRect(model.food.getX() * NODE_SIZE, model.food.getY() * NODE_SIZE, NODE_SIZE, NODE_SIZE);
+		
+		//draw the poisons
+		g.setColor(Color.red);
+		for(Node n:  model.poisons){
+			g.fillRect(n.getX() * NODE_SIZE, n.getY() * NODE_SIZE, NODE_SIZE, NODE_SIZE);
+		}
+		
+		//draw the snake
+		g.setColor(Color.black);
+		for(Node n : model.sBody){
+			g.fillRect(n.getX() * NODE_SIZE, n.getY() * NODE_SIZE, NODE_SIZE, NODE_SIZE);
+		}
 		
 		
 	}
