@@ -1,5 +1,11 @@
 package eecs2030.project;
 
+/**
+ * EECS2030 Project
+ * A simple Snake Game using MVC pattern.
+ * @author Chenxing Zheng #214634901
+ *
+ */
 public class SnakeGameApp {
 	public static void main(String[] args) {
 		
