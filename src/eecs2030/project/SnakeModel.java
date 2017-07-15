@@ -11,7 +11,7 @@ public class SnakeModel extends Observable implements Runnable{
 
 	private SnakeView view;
 	private Random rd = new Random();
-	boolean running;
+	boolean running;		// if the app is running
 	private boolean[][] occupied;
 	private int direction;
 	
@@ -82,6 +82,14 @@ public class SnakeModel extends Observable implements Runnable{
 		
 		
 	}
+	
+	private boolean moving(){
+		boolean moving = false;
+		
+		
+		
+		return moving;
+	}
 		
 	@Override
 	public void run() {
@@ -89,6 +97,20 @@ public class SnakeModel extends Observable implements Runnable{
 	        while (running) {  
 	            try {  
 	                Thread.sleep(500);  
+	                
+	                
+	                if(moving()){
+	                	
+	                }
+	                
+	                
+	                
+	                
+	                
+	                
+	                
+	                
+	                
 	                
 	                setChanged();            
                     notifyObservers();  
