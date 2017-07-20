@@ -16,15 +16,18 @@ public class SnakeGameApp {
 		
 		controller.setModel(model);
 		controller.setView(view);
-		
+	
 		view.setModel(model);
 		view.setController(controller);
+		
+		//view.setController(controller);
+		//view.setKeyListener(controller);
 		
 	    model.addObserver(view);
 		
 		(new Thread(model)).start();
 		
-		System.out.println(model.sBody);
+		//System.out.println(model.sBody);
 	
 	}
 }

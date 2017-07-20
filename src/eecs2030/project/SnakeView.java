@@ -37,8 +37,6 @@ public class SnakeView implements Observer {
 	
 		Container pane = frame.getContentPane();
 		
-		//this.ctrl = controller;
-		
 		scoreLable = new JLabel("Score:");
 		scoreLable.setPreferredSize(new Dimension(100,50));
 		pane.add(scoreLable, BorderLayout.NORTH);
@@ -52,7 +50,14 @@ public class SnakeView implements Observer {
 		ctrlPane.add(startBtn);
 		pane.add(ctrlPane, BorderLayout.SOUTH);
 		
-		frame.addKeyListener(ctrl);
+		
+		//WRONG
+		//the view didn't know a controller when it was just created
+		
+		//frame.addKeyListener(ctrl);
+		//startBtn.addKeyListener(ctrl);
+		//ctrlPane.addKeyListener(ctrl);
+		//frame.setFocusable(true);
 		
 		frame.setSize(width_columns*NODE_SIZE, height_rows*NODE_SIZE+100 );
 		frame.setResizable(false); 
@@ -63,14 +68,22 @@ public class SnakeView implements Observer {
 		
 	}
 	
+	/*public void setKeyListener(SnakeController c){
+		this.frame.addKeyListener(c);
+	}*/
+	
 	public void setModel(SnakeModel m){
 		
 		this.model = m;
 	}
 	
 	public void setController(SnakeController c){
-		
-		this.ctrl = c;
+		ctrl = c;
+		frame.addKeyListener(ctrl);
+		startBtn.addKeyListener(ctrl);
+		ctrlPane.addKeyListener(ctrl);
+		field.addKeyListener(ctrl);
+		frame.requestFocus();
 	}
 	
 	public int getWidth(){
@@ -103,6 +116,9 @@ public class SnakeView implements Observer {
 		for(Node n : model.sBody){
 			g.fillRect(n.getX() * NODE_SIZE, n.getY() * NODE_SIZE, NODE_SIZE, NODE_SIZE);
 		}
+		g.setColor(Color.gray);
+		Node head = model.sBody.getFirst();
+		g.fillRect(head.getX() * NODE_SIZE, head.getY() * NODE_SIZE, NODE_SIZE, NODE_SIZE);
 		
 		
 	}

@@ -11,13 +11,14 @@ public class SnakeModel extends Observable implements Runnable{
 
 	private SnakeView view;
 	private Random rd = new Random();
-	boolean running;		// if the app is running
+	boolean running = true;		// if the app is running
 	private boolean[][] occupied;
-	private int direction;
-	
+	private int direction = 1;
+	private int sleepTime = 200;
 	private int width;
 	private int height;
 	private static final int INITIAL_LENGTH  = 4;
+	private int poisonNum = rd.nextInt(3) + 5;
     static final int UP = 1;
     static final int DOWN = 2;
     static final int LEFT = 3;
@@ -39,7 +40,7 @@ public class SnakeModel extends Observable implements Runnable{
 		sBody.clear();
 		poisons.clear();
 		
-		//creat the snake
+		//create the snake
 		for(int i = 0; i < INITIAL_LENGTH; i++){
 			
 			int x = width/2 ;
@@ -49,19 +50,14 @@ public class SnakeModel extends Observable implements Runnable{
 			occupied[x][y] = true;
 		}
 		
-		creatFood();
-		creatPoisons();
+		createFood();
+		createPoisons();
 		
 		running = true;
-		//setUP();
-	}
-	
-	private void setUP(){
-		
 		
 	}
 	
-	private void creatFood(){
+	private void createFood(){
 		int x = 0;
 		int y = 0;
 		
@@ -76,17 +72,79 @@ public class SnakeModel extends Observable implements Runnable{
 		occupied[x][y] = true;
 	}
 	
-	private void creatPoisons(){
+	private void createPoisons(){
 		int x = 0;
 		int y = 0;
 		
-		
+		for(int i = 0; i < poisonNum; i++){
+			
+			do{
+				x = rd.nextInt(width + 1);
+				y = rd.nextInt(height +1);
+				
+				Node p = new Node(x, y);
+				poisons.add(p);
+				
+				} while(occupied[x][y] == true );
+					
+				occupied[x][y] = true;
+		}
+	}
+	
+	public void setDirection(int dir){
+		//cannot turn 180 degree
+		if( !(this.direction + dir == 3 || this.direction + dir ==7 )){
+			this.direction = dir;
+		}
 	}
 	
 	private boolean moving(){
-		boolean moving = false;
+		boolean moving = true; // for test, it should be false initially
+		//boolean moving = false;
 		
+		int x = sBody.get(0).x;
+		int y = sBody.getFirst().y;
 		
+		switch(direction){
+		case UP:
+			y--;     // y--!!!
+			break;
+		case DOWN:
+			y++;
+			break;
+		case LEFT:
+			x--;
+			break;
+		case RIGHT:
+			x++;
+			break;
+		}
+		
+		// if x & y are valid
+		if(x >= 0 && x <= width && y>=0 && y<= height){
+			if(occupied[x][y]){
+			
+				//eat food
+				if(food.x == x && food.y == y){
+					
+					sBody.addFirst(food);
+					createFood();
+					return true;
+				}
+				//occupied by poison or its own body
+				else{
+					return false;
+				}
+			}
+			// not occupied, just move
+			else{
+				Node tail = sBody.removeLast();
+				occupied[tail.x][tail.y] = false;
+				
+				Node newHead = new Node(x,y);
+				sBody.addFirst(newHead);
+			}
+		}
 		
 		return moving;
 	}
@@ -96,32 +154,26 @@ public class SnakeModel extends Observable implements Runnable{
 		         
 	        while (running) {  
 	            try {  
-	                Thread.sleep(500);  
-	                
-	                
+	                Thread.sleep(sleepTime);  
 	                if(moving()){
-	                	
+	                	//sBody.removeLast(); 	// remove the tail && add one to the head
+	                	//test
+	                	//Node newHead = new Node(sBody.get(0).x + 1, sBody.get(0).y);
+	                	//sBody.add(0, newHead);
+	                	setChanged();            
+	                    notifyObservers();  
+	                 }
+	                else{
+	                	running = false;
 	                }
-	                
-	                
-	                
-	                
-	                
-	                
-	                
-	                
-	                
-	                
-	                setChanged();            
-                    notifyObservers();  
-                    
-	            } catch (Exception e) {  
+	                 
+                    } catch (Exception e) {  
 	            	
 	            	break;  
 	            }  
-	        		}
+	        }
 
-			}
+	}
 	
 	
 	 	/**
