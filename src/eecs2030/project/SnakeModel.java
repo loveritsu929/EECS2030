@@ -14,7 +14,8 @@ public class SnakeModel extends Observable implements Runnable{
 	boolean running = true;		// if the app is running
 	private boolean[][] occupied;
 	private int direction = 1;
-	private int sleepTime = 200;
+	
+	int sleepTime = 400;
 	private int width;
 	private int height;
 	private static final int INITIAL_LENGTH  = 4;
@@ -95,6 +96,16 @@ public class SnakeModel extends Observable implements Runnable{
 		//cannot turn 180 degree
 		if( !(this.direction + dir == 3 || this.direction + dir ==7 )){
 			this.direction = dir;
+		}
+	}
+	
+	public void setSpeed(String s){
+		if(s.equals("+") && sleepTime >= 200){
+			sleepTime -= 100;
+		}
+		
+		if(s.equals("-") && sleepTime <= 600){
+			sleepTime += 100;
 		}
 	}
 	

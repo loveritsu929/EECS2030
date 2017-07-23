@@ -41,6 +41,12 @@ public class SnakeController implements KeyListener{
 			case KeyEvent.VK_RIGHT:
 				model.setDirection(model.RIGHT);
 				break;
+			case KeyEvent.VK_EQUALS:
+				model.setSpeed("+");
+				break;
+			case KeyEvent.VK_u:
+				model.setSpeed("-");
+				break;
 			case KeyEvent.VK_A:
 				System.out.print(" AAAAAAAAAAAAA ");
 			default:
