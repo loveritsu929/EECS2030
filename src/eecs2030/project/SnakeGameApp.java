@@ -1,5 +1,7 @@
 package eecs2030.project;
 
+import javax.swing.JOptionPane;
+
 /**
  * EECS2030 Project
  * A simple Snake Game using MVC pattern.
@@ -24,6 +26,7 @@ public class SnakeGameApp {
 		model.addObserver(view);
 		
 	    SnakeThread = new Thread(model);
+	    JOptionPane.showMessageDialog(null, "Use arrow keys to control the snake. \n Use +/- to change the speed. \n The faster the speed is, the more scores you get.");  
 		SnakeThread.start();
 		
 		//System.out.println(model.sBody);

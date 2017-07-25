@@ -195,6 +195,7 @@ public class SnakeModel extends Observable implements Runnable{
 	                 }
 	                else{
 	                	running = false;
+	                	JOptionPane.showMessageDialog(null, "Game Over!");  
 	                }
 	                 
                     } catch (Exception e) {  

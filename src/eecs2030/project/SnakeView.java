@@ -58,6 +58,7 @@ public class SnakeView implements Observer {
 
 		frame.setSize(width_columns*NODE_SIZE, height_rows*NODE_SIZE+100 );
 		frame.setResizable(false); 
+		frame.setLocationRelativeTo(null);
 		frame.pack();
 		frame.setVisible(true);
 		
