@@ -14,6 +14,8 @@ public class SnakeModel extends Observable implements Runnable{
 	boolean running = true;		// if the app is running
 	private boolean[][] occupied;
 	private int direction = 1;
+	private int score = 0;
+	private static int highestScore = 0;
 	
 	int sleepTime = 400;
 	private int width;
@@ -36,6 +38,11 @@ public class SnakeModel extends Observable implements Runnable{
 		this.width  = v.getWidth();
 		this.height = v.getHeight();
 		
+		restart();
+		
+	}
+	
+	public void restart(){
 		occupied = new boolean[width][height];
 		
 		sBody.clear();
@@ -100,13 +107,21 @@ public class SnakeModel extends Observable implements Runnable{
 	}
 	
 	public void setSpeed(String s){
-		if(s.equals("+") && sleepTime >= 200){
-			sleepTime -= 100;
+		if(s.equals("+") && sleepTime >= 100){
+			sleepTime -= 50;
 		}
 		
 		if(s.equals("-") && sleepTime <= 600){
-			sleepTime += 100;
+			sleepTime += 50;
 		}
+	}
+	
+	public int getScore(){
+		return this.score;
+	}
+	
+	public int getHighestScore(){
+		return this.highestScore;
 	}
 	
 	private boolean moving(){
@@ -140,6 +155,9 @@ public class SnakeModel extends Observable implements Runnable{
 					
 					sBody.addFirst(food);
 					createFood();
+					
+					score = score + 20 - sleepTime/50 ;
+					if(score > highestScore) highestScore = score;
 					return true;
 				}
 				//occupied by poison or its own body
@@ -153,6 +171,7 @@ public class SnakeModel extends Observable implements Runnable{
 				occupied[tail.x][tail.y] = false;
 				
 				Node newHead = new Node(x,y);
+				occupied[newHead.x][newHead.y] = true;
 				sBody.addFirst(newHead);
 			}
 		}

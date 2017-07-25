@@ -1,9 +1,11 @@
 package eecs2030.project;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class SnakeController implements KeyListener{
+public class SnakeController implements KeyListener, ActionListener{
 	
 	private SnakeView view;
 	private SnakeModel model;
@@ -44,11 +46,10 @@ public class SnakeController implements KeyListener{
 			case KeyEvent.VK_EQUALS:
 				model.setSpeed("+");
 				break;
-			case KeyEvent.VK_u:
+			case KeyEvent.VK_MINUS:
 				model.setSpeed("-");
+				//System.out.print(" ----- ");
 				break;
-			case KeyEvent.VK_A:
-				System.out.print(" AAAAAAAAAAAAA ");
 			default:
 				break;
 		
@@ -60,6 +61,26 @@ public class SnakeController implements KeyListener{
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String command = e.getActionCommand();
+		
+		//restart
+		if (command.equals("start")) {
+			SnakeModel newModel = new SnakeModel(view);
+			
+			this.setModel(newModel);
+			view.setModel(newModel);
+
+			model.deleteObserver(view);
+			newModel.addObserver(view);
+			
+			(new Thread(newModel)).start();
+		}
+	
 		
 	}
 	

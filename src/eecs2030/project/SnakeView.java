@@ -18,14 +18,14 @@ import eecs2030.project.SnakeModel.Node;
 
 public class SnakeView implements Observer {
 
-	private SnakeController ctrl;
+	private SnakeController controller;
 	private SnakeModel model;
 	private static int width_columns = 50;
 	private static int height_rows = 35 ;
 	private final static int NODE_SIZE = 15;
 	
 	private JFrame frame;
-	private JLabel scoreLable;
+	private JLabel scoreLabel;
 	private Canvas field;
 	private JPanel ctrlPane;
 	private JButton startBtn;
@@ -37,9 +37,9 @@ public class SnakeView implements Observer {
 	
 		Container pane = frame.getContentPane();
 		
-		scoreLable = new JLabel("Score:");
-		scoreLable.setPreferredSize(new Dimension(100,50));
-		pane.add(scoreLable, BorderLayout.NORTH);
+		scoreLabel = new JLabel("Score:", JLabel.CENTER);
+		scoreLabel.setPreferredSize(new Dimension(100,50));
+		pane.add(scoreLabel, BorderLayout.NORTH);
 		
 		field = new Canvas();
 		field.setSize(width_columns*NODE_SIZE, height_rows*NODE_SIZE);
@@ -55,10 +55,7 @@ public class SnakeView implements Observer {
 		//the view didn't know a controller when it was just created
 		
 		//frame.addKeyListener(ctrl);
-		//startBtn.addKeyListener(ctrl);
-		//ctrlPane.addKeyListener(ctrl);
-		//frame.setFocusable(true);
-		
+
 		frame.setSize(width_columns*NODE_SIZE, height_rows*NODE_SIZE+100 );
 		frame.setResizable(false); 
 		frame.pack();
@@ -78,11 +75,14 @@ public class SnakeView implements Observer {
 	}
 	
 	public void setController(SnakeController c){
-		ctrl = c;
-		frame.addKeyListener(ctrl);
-		startBtn.addKeyListener(ctrl);
-		ctrlPane.addKeyListener(ctrl);
-		field.addKeyListener(ctrl);
+		controller = c;
+		frame.addKeyListener(controller);
+		startBtn.addKeyListener(controller);
+		startBtn.setActionCommand("start");
+		
+		startBtn.addActionListener(controller);
+		ctrlPane.addKeyListener(controller);
+		field.addKeyListener(controller);
 		frame.requestFocus();
 	}
 	
@@ -133,6 +133,7 @@ public class SnakeView implements Observer {
 	public void update(Observable o, Object arg) {
 		
 		paint();
+		scoreLabel.setText("Score: " + model.getScore() + " Highest Score: " + model.getHighestScore());
 	}
 	
 	public static void main(String[] args) {

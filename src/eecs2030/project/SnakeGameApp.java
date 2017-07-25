@@ -7,6 +7,8 @@ package eecs2030.project;
  *
  */
 public class SnakeGameApp {
+	
+	static Thread SnakeThread;
 	public static void main(String[] args) {
 		
 		
@@ -19,13 +21,10 @@ public class SnakeGameApp {
 	
 		view.setModel(model);
 		view.setController(controller);
+		model.addObserver(view);
 		
-		//view.setController(controller);
-		//view.setKeyListener(controller);
-		
-	    model.addObserver(view);
-		
-		(new Thread(model)).start();
+	    SnakeThread = new Thread(model);
+		SnakeThread.start();
 		
 		//System.out.println(model.sBody);
 	
