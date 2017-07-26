@@ -21,7 +21,7 @@ public class SnakeModel extends Observable implements Runnable{
 	private int width;
 	private int height;
 	private static final int INITIAL_LENGTH  = 4;
-	private int poisonNum = rd.nextInt(3) + 5;
+	private int poisonNum = rd.nextInt(3) + 25;
     static final int UP = 1;
     static final int DOWN = 2;
     static final int LEFT = 3;
