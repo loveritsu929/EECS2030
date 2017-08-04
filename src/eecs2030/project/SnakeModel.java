@@ -139,7 +139,7 @@ public class SnakeModel extends Observable implements Runnable{
 	}
 	
 	private boolean moving(){
-		boolean moving = true; // for test, it should be false initially
+		boolean moving = true; 
 		//boolean moving = false;
 		
 		int x = sBody.get(0).x;
@@ -192,6 +192,10 @@ public class SnakeModel extends Observable implements Runnable{
 				occupied[newHead.x][newHead.y] = true;
 				sBody.addFirst(newHead);
 			}
+		}
+		// out of range
+		else{
+			return false;
 		}
 		
 		return moving;
