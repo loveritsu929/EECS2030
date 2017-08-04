@@ -50,6 +50,9 @@ public class SnakeController implements KeyListener, ActionListener{
 				model.setSpeed("-");
 				//System.out.print(" ----- ");
 				break;
+			case KeyEvent.VK_A:
+				model.cheat();
+				break;
 			default:
 				break;
 		

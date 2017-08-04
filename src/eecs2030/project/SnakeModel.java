@@ -21,7 +21,8 @@ public class SnakeModel extends Observable implements Runnable{
 	private int width;
 	private int height;
 	private static final int INITIAL_LENGTH  = 4;
-	private int poisonNum = rd.nextInt(3) + 5;
+	private int poisonNum = rd.nextInt(3) + 10;
+	//private int controlSignal = 0;
     static final int UP = 1;
     static final int DOWN = 2;
     static final int LEFT = 3;
@@ -81,6 +82,15 @@ public class SnakeModel extends Observable implements Runnable{
 	}
 	
 	private void createPoisons(){
+		/*
+		//clear the previous list
+		for(Node n: poisons){
+			occupied[n.x][n.y] = false;	
+		}
+		poisons.clear();
+		*/
+		
+		//create the new list
 		int x = 0;
 		int y = 0;
 		
@@ -114,6 +124,10 @@ public class SnakeModel extends Observable implements Runnable{
 		if(s.equals("-") && sleepTime <= 600){
 			sleepTime += 50;
 		}
+	}
+	
+	public void cheat(){
+		this.score += 100;
 	}
 	
 	public int getScore(){
@@ -152,12 +166,16 @@ public class SnakeModel extends Observable implements Runnable{
 			
 				//eat food
 				if(food.x == x && food.y == y){
-					
+				
 					sBody.addFirst(food);
 					createFood();
 					
 					score = score + 20 - sleepTime/50 ;
 					if(score > highestScore) highestScore = score;
+					
+					//if(score>=200) createPoisons();
+					
+					
 					return true;
 				}
 				//occupied by poison or its own body
