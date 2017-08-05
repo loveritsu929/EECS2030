@@ -22,7 +22,7 @@ public class SnakeModel extends Observable implements Runnable{
 	private int height;
 	private static final int INITIAL_LENGTH  = 4;
 	private int poisonNum = rd.nextInt(3) + 10;
-	//private int controlSignal = 0;
+	private int growth = rd.nextInt(4);
     static final int UP = 1;
     static final int DOWN = 2;
     static final int LEFT = 3;
@@ -164,7 +164,7 @@ public class SnakeModel extends Observable implements Runnable{
 		if(x >= 0 && x <= width && y>=0 && y<= height){
 			if(occupied[x][y]){
 			
-				//eat food
+				//eat food 
 				if(food.x == x && food.y == y){
 				
 					sBody.addFirst(food);
@@ -173,7 +173,27 @@ public class SnakeModel extends Observable implements Runnable{
 					score = score + 20 - sleepTime/50 ;
 					if(score > highestScore) highestScore = score;
 					
-					//if(score>=200) createPoisons();
+					// grows 1 to 3 segments, if it hits an element to avoid the snake dies
+					/*for(int i=0; i<growth; i++){
+						
+						int a = sBody.getLast().x;
+						int b = sBody.getLast().y;
+						
+						switch(direction){
+						case UP:
+							y--;     // y--!!!
+							break;
+						case DOWN:
+							y++;
+							break;
+						case LEFT:
+							x--;
+							break;
+						case RIGHT:
+							x++;
+							break;
+						}
+					}*/
 					
 					
 					return true;

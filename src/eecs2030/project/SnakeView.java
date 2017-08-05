@@ -137,7 +137,7 @@ public class SnakeView implements Observer {
 		scoreLabel.setText("Score: " + model.getScore() + " Highest Score: " + model.getHighestScore());
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		SnakeView testV = new SnakeView();
 		SnakeController testC = new SnakeController();
 		SnakeModel testM = new SnakeModel(testV);
@@ -149,6 +149,6 @@ public class SnakeView implements Observer {
 		testC.setView(testV);
 		
 		testV.paint();
-	}
+	}*/
 
 }
